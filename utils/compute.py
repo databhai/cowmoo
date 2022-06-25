@@ -1,6 +1,4 @@
 from logging import warning
-import os
-import sys
 import warnings
 import numpy as np
 import librosa as lr
@@ -38,20 +36,16 @@ def compare(mfcc1:np.ndarray, mfcc2:np.ndarray)->Any:
     return output
 
 
-def score(input_file:Union[str, Path], train_paths:List[Union[str,Path]])->float:
-    score = 0
+def score(input_file:Union[str, Path], benchmark_file_paths:List[Union[str,Path]])->float:
     input_mfcc = compute(input_file)
-    for train_file in train_paths:
-        train_mfcc = compute(train_file)
-        output = compare(train_mfcc, input_mfcc)
+    score = 0
+    for benchmark_file in benchmark_file_paths:
+        benchmark_mfcc = compute(benchmark_file)
+        output = compare(benchmark_mfcc, input_mfcc)
         score = output if output > score else score
     return score
 
 
 def normalise_score(score:float, top_range:float=200)->float:
-    # if score/top_range <.5:
-    #     top_range = top_range * .6
-    # elif score/top_range >.:
-    #     top_range = top_range * 1.4
     final_score = round((top_range - score) /top_range,2)
     return final_score
