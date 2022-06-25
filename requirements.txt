@@ -1,0 +1,7 @@
+dtw==1.4.0
+dtw_python==1.1.14
+librosa==0.9.1
+numpy==1.19.5
+pandas==1.4.3
+pycaret==2.3.10
+pydub==0.25.1
