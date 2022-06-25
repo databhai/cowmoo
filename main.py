@@ -1,21 +1,25 @@
-import warnings
-import os
+
 from argparse import ArgumentParser
-from os import listdir
-from os.path import isfile, join
-from pathlib import Path
-from typing import List, Union
+from sklearn.tree import DecisionTreeClassifier
 from utils.config import path_config
 from utils.files import load_sound_file
-from utils.compute import load_audio, compute, compare, score, normalise_score
+from utils.compute import score, normalise_score
 
 
+#input file 
+# collect input file detail 
+# load input file
+# extract feature
+# score -> predict
+# apply filtering 
+# compute DTW score
+# Make Decision
 
 
 def main()->float:
     input_file_path = load_sound_file('input')
     input_file_path = input_file_path[0]
-    raw_score = score(input_file_path, path_config['train_file_paths'])
+    raw_score = score(input_file_path, path_config['benchmark'])
     final_score = normalise_score(raw_score)
     print(f'Your hamba match is {final_score:.2%}')
     return final_score

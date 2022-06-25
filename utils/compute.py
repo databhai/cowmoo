@@ -1,13 +1,29 @@
+from logging import warning
 import os
 import sys
+import warnings
 import numpy as np
 import librosa as lr
+from pathlib import Path
 from dtw import dtw
 from typing import Any, Union, List
-from pathlib import Path
+from config import audio_config
 
+warnings.filterwarnings('ignore')
 
-def load_audio(path:Union[str,Path]):
+def load_audio(path:Union[str,Path], \
+                sample_rate:int=audio_config['sample_rate'],\
+                offset:float=audio_config['offset'],\
+                duration:float=audio_config['duration']):
+    '''loading the audio clip as floating point time series
+    args:
+        path: path to the sound clip, can be either str or a path object
+        sr: sample rate
+        offset: loading after offset seconds
+        duration: only load up to certain duration in secords
+    returns:
+        y : np.ndarray [shape=(n,) or (…, n)]
+        s : '''
     y, s = lr.load(path)
     return y, s
 
