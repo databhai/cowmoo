@@ -1,0 +1,7 @@
+name: moo_dev
+channels:
+  - defaults
+dependencies:
+  - python=3.8
+  - ipykernel
+prefix: /opt/anaconda3/envs/moo_dev
