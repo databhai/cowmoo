@@ -11,7 +11,7 @@ from utils.msg_generator import generate_msg
 
 model = load_model(join(path_config['model'],'model'))
 
-def main()->float:
+def main()->dict:
     input_file_path = load_sound_file('input')
     input_file_path = input_file_path[0]
     features = load_audio_extract_feat(input_file_path)
