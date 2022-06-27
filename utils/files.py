@@ -20,15 +20,29 @@ def ogg2wav(ofn):
     x.export(wfn, format='wav')
 
 
-DATA_DIR = 'data/train'
-data_dir_list = ['dog', 'other', 'hamba', 'glass', 'snoring', 'horn', 'baby', 'cow', 'cat', 'birds', 'church', 'siren', 'storm']
 
-#convert ogg to wav and delete ogg file
-def convert_ogg_wav():
-    for dir in data_dir_list:
-        for file in listdir(join(DATA_DIR, dir)):
-            file = join(DATA_DIR, dir, file)
-            if file.endswith('.ogg'):
-                ogg2wav(file)
-            if file.endswith('.ogg'):
+def mp3_to_wav(mp3_file):
+    wav_file_name = mp3_file.replace('.mp3','.wav')
+    conversion = AudioSegment.from_mp3(mp3_file)
+    conversion.export(wav_file_name, format='wav')
+
+def flac_to_wav(flac_file):
+    wav_file_name = flac_file.replace('.flac','.wav')
+    conversion = AudioSegment.from_file(flac_file)
+    conversion.export(wav_file_name, format='wav')
+
+def convert_audio_to_wav(DATA_DIR, format):
+    for file in listdir(DATA_DIR):
+        file = join(DATA_DIR, file)
+        if file.endswith(format):
+            if format == '.mp3':
+                mp3_to_wav(file)
                 os.remove(file)
+            elif format == '.flac':
+                flac_to_wav(file)
+                os.remove(file)
+            elif format == '.ogg':
+                flac_to_wav(file)
+                os.remove(file)
+            else:
+                print('unknown format')

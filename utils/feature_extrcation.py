@@ -14,7 +14,8 @@ from compute import load_audio
 def extract_feature(audio_data:np.ndarray, \
                     sample_rate:int=audio_config['sample_rate'], \
                     hop_length:int=audio_config['hop_length'], \
-                    n_mfcc = audio_config['n_mfcc'])->np.ndarray:
+                    n_mfcc = audio_config['n_mfcc'],\
+                    debug=False)->np.ndarray:
     '''
     exctracts features from audio files
     '''
@@ -24,19 +25,23 @@ def extract_feature(audio_data:np.ndarray, \
     spectral_centroid_feat = spectral_centroid(y=audio_data, sr=sample_rate, hop_length=hop_length)
     spectral_rolloff_feat = spectral_rolloff(y=audio_data, sr=sample_rate, hop_length=hop_length)
     spectral_bandwidth_feat = spectral_bandwidth(y=audio_data, sr=sample_rate, hop_length=hop_length)
+    if debug: print(f'concatenating features')
     concat_feat = np.concatenate((zcr_feat,
                                     rms_feat,
                                     mfcc_feat,
                                     spectral_centroid_feat,
                                     spectral_rolloff_feat,
                                     spectral_bandwidth_feat
-                                    ), axis=0)                            
+                                    ), axis=0) 
+    if debug: print(f'calculating mean of features')                         
     mean_feat = np.mean(concat_feat, axis=1, keepdims=True).transpose()
     return mean_feat  
 
 
-def load_audio_extract_feat(file:Union[str,Path])->np.ndarray:
+def load_audio_extract_feat(file:Union[str,Path], debug=False)->np.ndarray:
+    if debug: print(f'loading {file}')
     y, sr = load_audio(file)
+    if debug: print(f'extracting features from {file}')
     mean_feat = extract_feature(audio_data=y, sample_rate=sr)
     return mean_feat
 
@@ -54,11 +59,11 @@ def create_feat_label(dir_path:Union[str,Path],\
     return feat_df
 
 
-def create_feature_set(data_dir:Union[str,Path] = path_config['data'],\
+def create_feature_set(train_data_dir:Union[str,Path] = path_config['train_data_dir'],\
                         data_dir_list:List[str]= path_config['train_data_dir_list'],\
                         colmuns:List[str] = feature_config['feature_columns'])->pd.DataFrame:
     '''
     creates feature set dataframe combining feature and labels from all files from all folders
     '''
-    feature_set = pd.concat([create_feat_label(dir_path=os.path.join(data_dir,dir), columns_list=colmuns, label=dir) for dir in data_dir_list])
+    feature_set = pd.concat([create_feat_label(dir_path=os.path.join(train_data_dir,data_dir), columns_list=colmuns, label=data_dir) for data_dir in data_dir_list])
     return feature_set

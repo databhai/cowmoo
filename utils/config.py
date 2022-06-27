@@ -35,8 +35,6 @@ path_config = {'data':DATA_DIR,
                 'image':IMAGE_DIR
                 }
 
-
-
 data_path_config = {f'{dir}': os.path.join(DATA_DIR, dir) for dir in TRAIN_DATA_DIR_LIST}
 
 
@@ -44,7 +42,7 @@ data_path_config = {f'{dir}': os.path.join(DATA_DIR, dir) for dir in TRAIN_DATA_
 
 SAMPLE_RATE = 44100 #22050
 OFFSET = .1    #.1 second  
-DURATION = 4   # 3 seconds
+DURATION = 3   # 3 seconds
 HOP_LENGTH = 512
 N_FMCC = 13
 CHUNK_SIZE = 1024
@@ -63,8 +61,9 @@ audio_config = {
     }
 
 # features
-FEATURE_COLUMNS = ['zcr', 'rms_energy',\
-           'mfcc0', 'mfcc1', 'mfcc2', 'mfcc3', 'mfcc4', 'mfcc5', 'mfcc6', 'mfcc7', 'mfcc8', 'mfcc9', 'mfcc10', 'mfcc11',\
-           'mfcc12', 'sp_centroid', 'sp_rolloff', 'sp_bw']
+FEATURE_COLUMNS = ['zcr', 'rms_energy','mfcc0', 'mfcc1', 'mfcc2', 'mfcc3', 'mfcc4', 'mfcc5',\
+                    'mfcc6', 'mfcc7', 'mfcc8', 'mfcc9', 'mfcc10', 'mfcc11',\
+                    'mfcc12', 'sp_centroid', 'sp_rolloff', 'sp_bw']
 
 feature_config = {'feature_columns' : FEATURE_COLUMNS}
+
