@@ -2,6 +2,7 @@ import pandas as pd
 from os.path import join
 from pathlib import Path
 from typing import Union
+from pyAudioAnalysis import audioTrainTest as aT
 from feature_extrcation import load_audio_extract_feat
 from config import path_config, feature_config
 from pycaret.classification import load_model, predict_model
@@ -17,3 +18,10 @@ def predict_audio_class(input_file_path:Union[str,Path])->dict:
     return {'class' : prediction.Label[0], 'probability' : prediction.Score[0]}
 
 
+
+def score_with_pyaudio(input_file_path:Union[str,Path])->pd.DataFrame:
+    _, probability_, class_ = aT.file_classification(wavfile, "randForestV2","randomforest")
+    result={'class':class_, 'probability':probability_}
+    df_result = pd.DataFrame(result)
+    df_sorted=df_result.sort_values(by='probability', ascending=False)
+    return df_sorted
