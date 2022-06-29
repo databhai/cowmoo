@@ -4,8 +4,7 @@ from argparse import ArgumentParser
 from utils.config import path_config
 from utils.files import load_sound_file
 from utils.compute import score, normalise_score
-from utils.predict import predict_audio_class
-from utils.msg_generator import generate_msg
+from utils.predict import predict_audio_class, generate_message
 
 warnings.filterwarnings('ignore')
 
@@ -18,7 +17,7 @@ def main()->dict:
     final_score = normalise_score(raw_score)
     pred_ict = dict(islice(predcition.items(), 1))
     result = {'class' : list(pred_ict.keys())[0], 'probability' : list(pred_ict.values())[0], 'score' : final_score}
-    print(generate_msg(predcition))
+    print(generate_message(prediction=predcition, score=final_score))
     return result
 
 if __name__ == '__main__':
