@@ -47,5 +47,5 @@ def score(input_file:Union[str, Path], benchmark_file_paths:List[Union[str,Path]
 
 
 def normalise_score(score:float, top_range:float=200)->float:
-    final_score = round((top_range - score) /top_range,2)
+    final_score = round((top_range - max(score, top_range)) / top_range,2)
     return final_score

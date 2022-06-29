@@ -40,7 +40,7 @@ data_path_config = {f'{dir}': os.path.join(DATA_DIR, dir) for dir in TRAIN_DATA_
 
 # Audio configurations
 
-SAMPLE_RATE = 44100 #22050
+SAMPLE_RATE = 44000 #22050
 OFFSET = .1    #.1 second  
 DURATION = 3   # 3 seconds
 HOP_LENGTH = 512
