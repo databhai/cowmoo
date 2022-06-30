@@ -1,4 +1,4 @@
-# dtw==1.4.0
+dtw==1.4.0
 dtw_python==1.1.14
 librosa==0.9.1
 numpy==1.19.5
